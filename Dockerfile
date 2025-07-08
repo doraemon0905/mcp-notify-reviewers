@@ -1,21 +1,14 @@
-FROM node:20-alpine
+FROM node:18-alpine
 
 WORKDIR /app
 
-# Copy package files
-COPY package*.json ./
+COPY package.json yarn.lock ./
+RUN yarn install --frozen-lockfile
 
-# Install dependencies
-RUN npm install
-
-# Copy source code
 COPY . .
+RUN yarn build
 
-# Build TypeScript code
-RUN npm run build
+ENV NODE_ENV=production
+ENV CUSTOM_API_URL=""
 
-# Expose MCP port (default: 3000)
-EXPOSE 3000
-
-# Start the MCP server
 CMD ["node", "dist/index.js"] 

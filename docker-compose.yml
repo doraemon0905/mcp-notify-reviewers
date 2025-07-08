@@ -3,11 +3,11 @@ version: '3.8'
 services:
   mcp-notify-reviewers:
     build: .
-    ports:
-      - "3000:3000"
-    volumes:
-      - ~/.cursor/mcp:/app/mcp
+    image: ghcr.io/doraemon0905/mcp-notify-reviewers:latest
+    container_name: mcp-notify-reviewers
     environment:
       - NODE_ENV=production
-      - MCP_PORT=3000
+      - CUSTOM_API_URL=${CUSTOM_API_URL}
+    stdin_open: true
+    tty: true
     restart: unless-stopped 

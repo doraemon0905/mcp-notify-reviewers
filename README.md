@@ -1,6 +1,6 @@
 # MCP Notify Reviewers
 
-A Cursor MCP extension for notifying code reviewers about pull requests that need their attention.
+An MCP extension for notifying code reviewers in Cursor.
 
 ## Features
 
@@ -180,3 +180,77 @@ To publish a new version:
 ## License
 
 MIT
+
+## Docker Usage
+
+You can run this MCP extension using Docker in two ways:
+
+### 1. Using Docker Run
+
+```bash
+docker run -i --rm \
+  -e CUSTOM_API_URL=your_api_url \
+  ghcr.io/doraemon0905/mcp-notify-reviewers:latest
+```
+
+### 2. Using Docker Compose
+
+1. Create a `.env` file with your configuration:
+```bash
+CUSTOM_API_URL=your_api_url
+```
+
+2. Run with docker-compose:
+```bash
+docker-compose up -d
+```
+
+## MCP Configuration
+
+Add the following to your Cursor MCP configuration:
+
+```json
+{
+  "command": "docker",
+  "args": [
+    "run",
+    "-i",
+    "--rm",
+    "-e", "CUSTOM_API_URL",
+    "ghcr.io/doraemon0905/mcp-notify-reviewers:latest"
+  ],
+  "env": {
+    "CUSTOM_API_URL": "your_api_url"
+  }
+}
+```
+
+## Environment Variables
+
+- `CUSTOM_API_URL`: Your custom API URL for the service
+- `NODE_ENV`: Application environment (defaults to 'production' in Docker)
+
+## Development
+
+### Local Setup
+
+1. Install dependencies:
+```bash
+yarn install
+```
+
+2. Build the project:
+```bash
+yarn build
+```
+
+3. Start the MCP extension:
+```bash
+yarn start
+```
+
+### Building Docker Image
+
+```bash
+docker build -t mcp-notify-reviewers .
+```
