@@ -1,6 +1,6 @@
 {
   "name": "@doraemon0905/mcp-notify-reviewers",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "MCP extension for notifying pull request reviewers via Slack",
   "main": "dist/index.js",
   "scripts": {
