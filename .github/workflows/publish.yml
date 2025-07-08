@@ -30,7 +30,7 @@ jobs:
 
       - name: Update package name for GitHub Packages
         run: |
-          sed -i 's/"name": "mcp-notify-reviewers"/"name": "@giangbeo91\/mcp-notify-reviewers"/' package.json
+          sed -i 's/"name": "mcp-notify-reviewers"/"name": "@doraemon0905\/mcp-notify-reviewers"/' package.json
 
       - name: Setup npm for GitHub Packages
         run: |
