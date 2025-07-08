@@ -1,5 +1,5 @@
 {
-  "name": "@cursor/mcp-notify-reviewers",
+  "name": "doraemon0905/mcp-notify-reviewers",
   "version": "1.0.0",
   "description": "MCP extension for notifying code reviewers in Cursor",
   "main": "dist/index.js",
