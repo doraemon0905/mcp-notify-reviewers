@@ -1,6 +1,6 @@
 {
   "name": "@doraemon0905/mcp-notify-reviewers",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "MCP extension for notifying code reviewers in Cursor",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
