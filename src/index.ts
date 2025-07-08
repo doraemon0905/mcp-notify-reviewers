@@ -3,7 +3,7 @@ import express from 'express';
 import cors from 'cors';
 
 interface NotifyReviewersRequest {
-  pullRequestId: string;
+  pullRequestUrl: string;
   reviewers: string[];
   message?: string;
 }
@@ -35,27 +35,94 @@ export async function handleMCPRequest(request: MCPRequest): Promise<MCPResponse
 async function handleNotifyReviewers(args: NotifyReviewersRequest): Promise<MCPResponse> {
   try {
     // Validate input
-    if (!args.pullRequestId) {
-      throw new Error('Pull request ID is required');
-    }
-    if (!args.reviewers || args.reviewers.length === 0) {
-      throw new Error('At least one reviewer is required');
+    if (!args.pullRequestUrl) {
+      throw new Error('GitHub pull request URL is required');
     }
 
-    // Here you would implement the actual notification logic
-    // For example, sending notifications through GitHub API or other channels
-    const defaultMessage = `Please review PR #${args.pullRequestId}`;
-    const notificationMessage = args.message || defaultMessage;
+    const githubPrUrl = args.pullRequestUrl;
+    
+    // Step 1: Get reviewers from custom API
+    const reviewersResponse = await fetch(`${process.env.CUSTOM_API_URL}/pull-request/reviewers`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${process.env.CUSTOM_API_TOKEN}`
+      },
+      body: JSON.stringify({ prUrl: githubPrUrl })
+    });
 
-    // For now, we'll just return a success response
-    // In a real implementation, you would integrate with your notification system
+    if (!reviewersResponse.ok) {
+      throw new Error('Failed to fetch reviewers from custom API');
+    }
+
+    const reviewersData = await reviewersResponse.json() as { reviewers: string[] };
+    const reviewers = reviewersData.reviewers || [];
+
+    if (reviewers.length === 0) {
+      return {
+        success: true,
+        result: {
+          success: true,
+          message: 'No reviewers found for this pull request'
+        } as NotifyReviewersResponse
+      };
+    }
+
+    // Step 2: Get Slack IDs for reviewers from custom API
+    const slackIdsResponse = await fetch(`${process.env.CUSTOM_API_URL}/users/slack-ids`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${process.env.CUSTOM_API_TOKEN}`
+      },
+      body: JSON.stringify({ reviewers })
+    });
+
+    if (!slackIdsResponse.ok) {
+      throw new Error('Failed to fetch Slack IDs for reviewers');
+    }
+
+    const slackIdsData = await slackIdsResponse.json() as { slackIds: string[] };
+    const slackIds = slackIdsData.slackIds || [];
+
+    if (slackIds.length === 0) {
+      return {
+        success: true,
+        result: {
+          success: true,
+          message: 'No Slack IDs found for the reviewers'
+        } as NotifyReviewersResponse
+      };
+    }
+
+    // Step 3: Send notification to Slack via custom API
+    const slackNotificationResponse = await fetch(`${process.env.CUSTOM_API_URL}/slack/notify`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${process.env.CUSTOM_API_TOKEN}`
+      },
+      body: JSON.stringify({
+        reviewers: slackIds,
+        prUrl: githubPrUrl,
+        message: args.message || `Please review this pull request: ${githubPrUrl}`
+      })
+    });
+
+    if (!slackNotificationResponse.ok) {
+      throw new Error('Failed to send notification to Slack');
+    }
+
+    const notificationResult = await slackNotificationResponse.json() as { success: boolean };
+
     return {
       success: true,
       result: {
         success: true,
-        message: `Successfully notified reviewers: ${args.reviewers.join(', ')} with message: ${notificationMessage}`
+        message: `Successfully notified ${slackIds.length} reviewers in Slack: ${slackIds.join(', ')}`
       } as NotifyReviewersResponse
     };
+
   } catch (error) {
     return {
       success: false,
