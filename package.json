@@ -1,5 +1,5 @@
 {
-  "name": "doraemon0905/mcp-notify-reviewers",
+  "name": "@giangbeo91/mcp-notify-reviewers",
   "version": "1.0.0",
   "description": "MCP extension for notifying code reviewers in Cursor",
   "main": "dist/index.js",
@@ -23,14 +23,14 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yourusername/mcp-notify-reviewers.git"
+    "url": "git+https://github.com/giangbeo91/mcp-notify-reviewers.git"
   },
   "bugs": {
-    "url": "https://github.com/yourusername/mcp-notify-reviewers/issues"
+    "url": "https://github.com/giangbeo91/mcp-notify-reviewers/issues"
   },
-  "homepage": "https://github.com/yourusername/mcp-notify-reviewers#readme",
+  "homepage": "https://github.com/giangbeo91/mcp-notify-reviewers#readme",
   "publishConfig": {
-    "access": "public"
+    "registry": "https://npm.pkg.github.com"
   },
   "dependencies": {
     "express": "^4.18.2",

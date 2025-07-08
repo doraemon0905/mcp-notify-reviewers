@@ -11,14 +11,20 @@ A Cursor MCP extension for notifying code reviewers about pull requests that nee
 
 ## Installation
 
-### Option 1: NPM Installation (Recommended)
+### Option 1: GitHub Packages Installation (Recommended)
+
+First, authenticate with GitHub Packages by creating a `.npmrc` file in your project root:
 
 ```bash
-# Install the stable version
-npm install @cursor/mcp-notify-reviewers
+@giangbeo91:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=YOUR_GITHUB_TOKEN
+```
 
-# Or install the beta version for latest features
-npm install @cursor/mcp-notify-reviewers@beta
+Then install the package:
+
+```bash
+# Install the latest version
+npm install @giangbeo91/mcp-notify-reviewers
 ```
 
 ### Option 2: Docker Installation
@@ -27,7 +33,7 @@ The easiest way to run this MCP extension is using Docker:
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/yourusername/mcp-notify-reviewers.git
+   git clone https://github.com/giangbeo91/mcp-notify-reviewers.git
    cd mcp-notify-reviewers
    ```
 
@@ -56,15 +62,15 @@ docker-compose down
 1. Clone this repository
 2. Install dependencies:
 ```bash
-npm install
+yarn install
 ```
 3. Build the project:
 ```bash
-npm run build
+yarn build
 ```
 4. Start the server:
 ```bash
-npm start
+yarn start
 ```
 
 ### Option 4: Manual Installation in Cursor MCP
@@ -151,29 +157,25 @@ When running in Docker or standalone mode, the following endpoints are available
 1. Make your changes in the `src` directory
 2. Run tests:
 ```bash
-npm test
+yarn test
 ```
 3. Build the project:
 ```bash
-npm run build
+yarn build
 ```
 
 ## Publishing
 
-This package is automatically published to npm using GitHub Actions:
+This package is automatically published to GitHub Packages using GitHub Actions:
 
-- When a new release is created on GitHub, a stable version is published to npm
-- When changes are pushed to the main branch, a beta version is published to npm
+- When a new release is published on GitHub, the package will be automatically published to GitHub Packages
+- The workflow will run tests and build before publishing
 
 To publish a new version:
 
-1. For stable releases:
-   - Create a new release on GitHub
-   - The workflow will automatically publish to npm
-
-2. For beta releases:
-   - Push changes to the main branch
-   - The workflow will automatically publish a beta version to npm
+1. Update the version in package.json
+2. Create and publish a new release on GitHub
+3. The workflow will automatically publish to GitHub Packages
 
 ## License
 
