@@ -1,17 +1,35 @@
 {
-  "name": "mcp-notify-reviewers",
+  "name": "@cursor/mcp-notify-reviewers",
   "version": "1.0.0",
   "description": "MCP extension for notifying code reviewers in Cursor",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
     "test": "jest",
-    "start": "node dist/index.js"
+    "start": "node dist/index.js",
+    "prepublishOnly": "npm test && npm run build"
   },
-  "keywords": ["cursor", "mcp", "code-review"],
+  "keywords": ["cursor", "mcp", "code-review", "github", "pull-request"],
   "author": "",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yourusername/mcp-notify-reviewers.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/mcp-notify-reviewers/issues"
+  },
+  "homepage": "https://github.com/yourusername/mcp-notify-reviewers#readme",
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "express": "^4.18.2",
     "cors": "^2.8.5"

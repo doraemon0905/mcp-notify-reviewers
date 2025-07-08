@@ -1,0 +1,29 @@
+# Source
+src/
+tests/
+__tests__/
+*.test.ts
+
+# Config files
+tsconfig.json
+jest.config.js
+.github/
+.gitignore
+.npmignore
+.dockerignore
+
+# Docker
+Dockerfile
+docker-compose.yml
+
+# Development
+node_modules/
+coverage/
+.vscode/
+.idea/
+*.log
+*.tgz
+
+# Environment
+.env
+.env.* 

@@ -11,9 +11,19 @@ A Cursor MCP extension for notifying code reviewers about pull requests that nee
 
 ## Installation
 
-### Option 1: Docker Installation (Recommended)
+### Option 1: NPM Installation (Recommended)
 
-The easiest way to install and run this MCP extension is using Docker:
+```bash
+# Install the stable version
+npm install @cursor/mcp-notify-reviewers
+
+# Or install the beta version for latest features
+npm install @cursor/mcp-notify-reviewers@beta
+```
+
+### Option 2: Docker Installation
+
+The easiest way to run this MCP extension is using Docker:
 
 1. Clone this repository:
    ```bash
@@ -42,7 +52,7 @@ To stop the service:
 docker-compose down
 ```
 
-### Option 2: Local Development
+### Option 3: Local Development
 1. Clone this repository
 2. Install dependencies:
 ```bash
@@ -57,7 +67,7 @@ npm run build
 npm start
 ```
 
-### Option 3: Manual Installation in Cursor MCP
+### Option 4: Manual Installation in Cursor MCP
 
 To manually install this extension in Cursor's MCP system:
 
@@ -147,6 +157,23 @@ npm test
 ```bash
 npm run build
 ```
+
+## Publishing
+
+This package is automatically published to npm using GitHub Actions:
+
+- When a new release is created on GitHub, a stable version is published to npm
+- When changes are pushed to the main branch, a beta version is published to npm
+
+To publish a new version:
+
+1. For stable releases:
+   - Create a new release on GitHub
+   - The workflow will automatically publish to npm
+
+2. For beta releases:
+   - Push changes to the main branch
+   - The workflow will automatically publish a beta version to npm
 
 ## License
 
